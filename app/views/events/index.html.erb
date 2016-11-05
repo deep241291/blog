@@ -44,7 +44,7 @@
              <label>EVENT_OVER</label>
           <%end%>
           </td>
-          <% if current_user and current_user.id == event[:created_by_id]%>
+          <% if current_user and current_user.id == event[:created_by_id] and event[:event_valid] == ENABLE%>
           <td>
             <%= link_to edit_event_path(event[:id]), class: 'btn btn-default btn-sm btn btn-warning' do %>
                 <span class="glyphicon glyphicon-edit"></span>
