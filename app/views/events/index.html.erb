@@ -1,0 +1,98 @@
+<!-- <div class="page-header">
+  <h1>Items</h1>
+</div> -->
+
+<div class="table-responsive">
+  <table class="table table-hover table-bordered data-table">
+    <thead>
+    <tr class="black-white">
+      <th class="text-align-center">Name</th> 
+      <th class="text-align-center">Start Date</th>
+      <th class="text-align-center">End Date</th>
+      <th class="text-align-center">Fees</th>
+      <%if current_user and current_user.gender == FEMALE%>
+      <th class="text-align-center">Consession Fees</th>
+      <%end%> 
+      <th class="text-align-center">Created By</th>
+      <th class="text-align-center">Contact Email</th>
+      <th class="text-align-center">Contact No</th>
+      <th class="text-align-center">Attend/Unattend</th>
+      <th class="text-align-center">Edit</th>
+      <th class="text-align-center">Delete</th>
+      <!--<th colspan="3"></th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <% @events.each do |event| %>
+        <tr class="<%= cycle("cycle-1", "cycle-2") -%>" align="center">
+          <td><%= link_to event[:name], event_path(event[:id]) %></td>
+          <td><%= event[:start_date] %></td>
+          <td><%= event[:end_date] %></td>
+          <td ><%= event[:fees] %></td>
+          <%if current_user and current_user.gender == FEMALE%>
+          <td ><b><%= get_consession_price(event[:fees])%></b></td>
+          <%end%> 
+          <td><%= event[:created_by] %></td>
+          <td><%= event[:contact_email] %></td>
+          <td><%= event[:contact_no] %></td>
+          <% if current_user.present?%>
+          <td>
+          <% if event[:event_valid] == ENABLE%>
+              <%= select_tag :manage, options_for_select(MANAGE_EVENT, event[:attend]), id: event[:id], class: "mange_event" %>
+          <%else%>
+             <label>EVENT_OVER</label>
+          <%end%>
+          </td>
+          <% if current_user and current_user.id == event[:created_by_id]%>
+          <td>
+            <%= link_to edit_event_path(event[:id]), class: 'btn btn-default btn-sm btn btn-warning' do %>
+                <span class="glyphicon glyphicon-edit"></span>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to 'Destroy', event_path(event[:id]), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default btn-sm btn btn-danger'%>
+
+          </td>
+          <%else%>
+          <td>-</td>
+          <td>-</td>
+          <%end%>
+          <%else%>
+           <td>-</td>
+           <td>-</td>
+           <td>-</td>
+          <%end%>
+        </tr>
+    <% end %>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<% if current_user.present? %>
+<%= link_to 'Create Event', new_event_path, class: 'btn btn-default btn-sm btn btn-primary'  %>
+<%end%>
+
+<script type="text/javascript">
+  $('.mange_event').change(function(){
+     val = $(this).val()
+     event_id = $(this).attr('id')
+     curent_select = $(this)
+     $.ajax({
+      async : true,
+      type : 'GET',
+      datatype: "JSON",
+      url : "/events/manage_event",
+      data : { "id": event_id,
+               "value": val},         
+      success: function(resp){
+      },errors: function(resp){ 
+                alert(resp)
+      }
+       
+    });
+  });
+</script>
+
+
+
