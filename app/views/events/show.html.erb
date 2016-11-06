@@ -71,6 +71,38 @@
     </div>
   </div>
   
+    <div class="form-group">
+    <label class="control-label col-sm-2" for="name">Created By:</label>
+    <div class="col-sm-6">
+      <%= text_field_tag :name, @event.get_name, class: 'form-control', readonly: true%>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+  <table class="table table-hover table-bordered data-table">
+    <thead>
+    <tr class="black-white">
+      <th class="text-align-center">Name</th> 
+      <th class="text-align-center">Gender</th>
+      <th class="text-align-center">Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+     <% @users.each do |k|%>
+      <tr class="<%= cycle("cycle-1", "cycle-2") %>" align="center">
+        <td><%= k[:name] %></td>
+        <td><%= k[:gender]%></td>
+        <td><%= k[:email]%></td>
+      </tr>
+     <%end%>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
 <% end %>
 
  <% if current_user and current_user.id == @event.created_by%>

@@ -12,6 +12,7 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
+    @users = @event.get_user_name
   end
 
   # GET /events/new
@@ -66,7 +67,11 @@ class EventsController < ApplicationController
 
 
   def manage_event
+    if params[:value] == "1"
     @event.users << current_user
+    else
+      @event.users.delete(User.find_by_id current_user.id)
+    end
     render :nothing => true 
   end
 

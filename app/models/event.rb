@@ -16,9 +16,17 @@ class Event < ActiveRecord::Base
 	def self.get_event_detail(user)
 
 		Event.order(created_at: :desc).map{|h| {id: h.id, name: h.name, start_date: get_date_format(h.start_date),\
-		end_date: get_date_format(h.end_date), fees: h.fees, created_by_id: h.created_by, created_by: User.find_by_id(h.created_by).name,\
+		end_date: get_date_format(h.end_date), fees: h.fees, created_by_id: h.created_by, created_by: (User.find_by_id(h.created_by).name if User.find_by_id(h.created_by)),\
 		contact_email: h.contact_email, contact_no: h.contact_no, status: (user.present? and h.created_by == user.id ? ENABLE : DISABLE ),\
 		event_valid: event_valid(h.start_date), attend: (user.present? ? (h.users.include?(user) == true ?  ENABLE : DISABLE): DISABLE)}}
 
+	end
+
+	def get_user_name
+		self.users.map{|h| {email: h.email, name: h.name, gender: h.gender.titleize}}
+	end
+
+	def get_name
+		User.find_by_id(self.created_by).name
 	end
 end
