@@ -23,7 +23,7 @@ class Event < ActiveRecord::Base
 	end
 
 	def get_user_name
-		self.users.map{|h| {email: h.email, name: h.name, gender: h.gender.titleize}}
+		self.users.map{|h| {email: h.email, name: h.name, gender: h.gender.titleize, fees: self.fees}}
 	end
 
 	def get_name

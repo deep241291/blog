@@ -84,6 +84,7 @@
     <tr class="black-white">
       <th class="text-align-center">Name</th> 
       <th class="text-align-center">Gender</th>
+      <th class="text-align-center">Fees</th>
       <th class="text-align-center">Email</th>
     </tr>
     </thead>
@@ -93,6 +94,7 @@
       <tr class="<%= cycle("cycle-1", "cycle-2") %>" align="center">
         <td><%= k[:name] %></td>
         <td><%= k[:gender]%></td>
+        <td><%= k[:gender] == MALE.titleize ? k[:fees] : get_consession_price(k[:fees])%></td>
         <td><%= k[:email]%></td>
       </tr>
      <%end%>
