@@ -45,7 +45,7 @@ gem 'autoprefixer-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'jquery-datatables-rails', '~> 3.3.0'
 gem "bootstrap-switch-rails"
-
+gem 'puma'
 
 # Image uploading
 gem 'carrierwave'
