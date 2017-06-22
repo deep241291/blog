@@ -4,7 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_and_belongs_to_many :events       
-
+  has_many :posts
+  has_many :comments
   validates :name, presence: { message: "User Name can't be blank"}, length: { maximum: 100, message: "User Name can't be greater than 100 character" }
-  validates :gender, presence: { message: "Gender can't be blank"}
+  acts_as_voter
 end

@@ -1,0 +1,48 @@
+
+
+<div class="table-responsive">
+  <table class="table table-hover table-bordered data-table">
+    <thead>
+    <tr class="black-white">
+      <th class="text-align-center">Post</th> 
+      <th class="text-align-center">Comment</th>
+      <th class="text-align-center">Comment Count</th>
+      <th class="text-align-center">Edit</th>
+      <th class="text-align-center">Delete</th>
+      <!--<th colspan="3"></th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+         <% @posts.each do |post| %>
+        <tr class="<%= cycle("cycle-1", "cycle-2") -%>" align="center">
+          <td><%= post.name %></td>
+
+          <td> <%= link_to post_path(post.id), class: 'btn btn-default btn-sm btn btn-success' do%>
+               <span class="glyphicon glyphicon-comments">Commet</span>
+               <%end%>
+         </td>
+         <td><%= post.comments.count%></td>
+        
+         <td> <% if post.user == current_user%>  
+         <%= link_to edit_post_path(post.id), class: 'btn btn-default btn-sm btn btn-warning' do %>
+                <span class="glyphicon glyphicon-edit"></span>
+            <% end %>
+         <%end%>   
+          </td>
+          <td>
+            <%= link_to 'Destroy', post_path(post.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default btn-sm btn btn-danger'%>
+
+          </td>
+    <% end %>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to 'Create Post', new_post_path, class: 'btn btn-default btn-sm btn btn-primary'  %>
+
+
+
+
+

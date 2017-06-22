@@ -35,11 +35,6 @@
     <%= f.text_field :name, autocomplete: "off" %>
   </div>
 
-  <div class="field">
-    <%= f.label :gender %><br />
-    <%= f.select(:gender, options_for_select(GENDER), {prompt: "Tour Type"}) %>
-  </div>
-
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
